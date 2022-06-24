@@ -10,7 +10,6 @@ import { DetailType } from "./models/EventEnums";
 
 export class BlogCdkEventdrivenStepfunctionsStack extends Stack {
   bus: Bus;
-  sm: EventdrivenStepfunction;
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
@@ -22,13 +21,13 @@ export class BlogCdkEventdrivenStepfunctionsStack extends Stack {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
     });
 
-    const getMultiple = this.addLambda({ name: `getMultiple`, detailType: DetailType.GET_MULTIPLE});
-    const processSingle = this.addLambda({ name: `processSingle`, detailType: DetailType.PROCESS_SINGLE, bucket});
-    const postProcessSingle = this.addLambda({ name: `postProcessSingle`, detailType: DetailType.PROCESS_SINGLE_POST, bucket});
-    const postProcessAll = this.addLambda({ name: `postProcessAll`, detailType: DetailType.PROCESS_ALL, bucket});
-    const sideEffect = this.addLambda({ name: `sideEffect`, detailType: DetailType.PROCESS_SINGLE_POST});
+    this.addLambda({ name: `getMultiple`, detailType: DetailType.GET_MULTIPLE});
+    this.addLambda({ name: `processSingle`, detailType: DetailType.PROCESS_SINGLE, bucket});
+    this.addLambda({ name: `postProcessSingle`, detailType: DetailType.PROCESS_SINGLE_POST, bucket});
+    this.addLambda({ name: `postProcessAll`, detailType: DetailType.PROCESS_ALL, bucket});
+    this.addLambda({ name: `sideEffect`, detailType: DetailType.PROCESS_SINGLE_POST});
 
-    const sm = new EventdrivenStepfunction(this, `SM`, { bus: this.bus });
+    new EventdrivenStepfunction(this, `SM`, { bus: this.bus });
   }
 
   addLambda({name, detailType, bucket}: { name: string, detailType: string, bucket?: Bucket}) {
