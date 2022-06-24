@@ -11,18 +11,24 @@
     "cdk": "cdk"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.3.0",
+    "@types/aws-lambda": "^8.10.101",
     "@types/jest": "^27.5.2",
     "@types/node": "10.17.27",
+    "@types/node-fetch": "^2.6.2",
     "@types/prettier": "2.6.0",
+    "aws-cdk": "2.29.0",
+    "esbuild": "^0.14.47",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.4",
-    "aws-cdk": "2.29.0",
     "ts-node": "^10.8.1",
     "typescript": "~3.9.7"
   },
   "dependencies": {
     "aws-cdk-lib": "2.29.0",
+    "aws-sdk": "^2.1161.0",
     "constructs": "^10.0.0",
+    "node-fetch": "^3.2.6",
     "source-map-support": "^0.5.21"
   }
 }

@@ -1,14 +1,7 @@
-# Welcome to your CDK TypeScript project
+# Event-Driven Step Functions (blog post code)
 
-This is a blank project for CDK development with TypeScript.
-
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
-
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+To run this project:
+1. `npm install`
+2. `npx cdk deploy` (have your AWS profile ready to go)
+3. `aws events put-events --entries Source=project,DetailType=start,EventBusName=default,Detail=\"{}\" --region us-east-1` (this event will start the step function)
+4. `npx cdk-app-cli Bucket visit-console` (this will take you quickly to the s3 bucket where files will eventually got populated)
