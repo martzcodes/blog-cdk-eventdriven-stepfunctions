@@ -68,7 +68,7 @@ export class EventdrivenStepfunction extends Construct {
       },
       detailType: DetailType.PROCESS_ALL,
       eventBus: props.bus.defaultBus,
-      resultPath: "$.totalCookiesConsumed"
+      resultPath: "$.totalCookiesConsumed",
     });
 
     // success
@@ -84,11 +84,11 @@ export class EventdrivenStepfunction extends Construct {
     });
 
     new Rule(this, `StartMachineRule`, {
-        eventBus: props.bus.defaultBus,
-        eventPattern: {
-            detailType: [DetailType.START],
-        },
-        targets: [new SfnStateMachine(this.stateMachine)]
+      eventBus: props.bus.defaultBus,
+      eventPattern: {
+        detailType: [DetailType.START],
+      },
+      targets: [new SfnStateMachine(this.stateMachine)],
     });
 
     this.addTaskFinisher(props.bus);
