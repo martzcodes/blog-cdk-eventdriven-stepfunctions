@@ -41,7 +41,7 @@ export const putEvent = async (
           EventBusName: process.env.EVENT_BUS,
           Time: new Date(),
           ...entry,
-          Detail: JSON.parse({
+          Detail: JSON.stringify({
             ...detail,
             ...eventMetadata(event, entry.DetailType!),
           }),
