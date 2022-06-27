@@ -2,7 +2,7 @@ import type { EventBridgeEvent } from "aws-lambda";
 import { EventBridge, S3 } from "aws-sdk";
 import { GetObjectRequest, PutObjectRequest } from "aws-sdk/clients/s3";
 import { DetailType } from "../models/EventEnums";
-import { eventMetadata, putEvent } from "./util";
+import { putEvent } from "./util";
 
 let ebClient: EventBridge;
 let s3: S3;
@@ -44,10 +44,9 @@ export const handler = async (
   if (!ebClient) {
     ebClient = new EventBridge();
   }
-  await putEvent(ebClient, {
+  await putEvent(ebClient, event, {
     DetailType: DetailType.TASK_FINISHED,
     Detail: JSON.stringify({
-      ...eventMetadata(event),
       totalCookiesConsumed: output.totalCookiesConsumed,
     }),
   });

@@ -1,7 +1,7 @@
 import type { EventBridgeEvent } from "aws-lambda";
 import { EventBridge, S3 } from "aws-sdk";
 import { DetailType } from "../models/EventEnums";
-import { eventMetadata, putEvent } from "./util";
+import { putEvent } from "./util";
 import { faker } from "@faker-js/faker";
 import type { PutObjectRequest } from "aws-sdk/clients/s3";
 
@@ -41,8 +41,8 @@ export const handler = async (
   if (!ebClient) {
     ebClient = new EventBridge();
   }
-  await putEvent(ebClient, {
+  await putEvent(ebClient, event, {
     DetailType: DetailType.PROCESS_SINGLE_POST,
-    Detail: JSON.stringify({ ...eventMetadata(event), profile: presigned }),
+    Detail: JSON.stringify({ profile: presigned }),
   });
 };

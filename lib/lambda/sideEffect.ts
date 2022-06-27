@@ -1,7 +1,7 @@
 import type { EventBridgeEvent } from "aws-lambda";
 import { EventBridge } from "aws-sdk";
 import { DetailType } from "../models/EventEnums";
-import { eventMetadata, putEvent } from "./util";
+import { putEvent } from "./util";
 import fetch from "node-fetch";
 
 let ebClient: EventBridge;
@@ -21,8 +21,8 @@ export const handler = async (
   if (!ebClient) {
     ebClient = new EventBridge();
   }
-  await putEvent(ebClient, {
+  await putEvent(ebClient, event, {
     DetailType: DetailType.SIDE_EFFECT_COMPLETE,
-    Detail: JSON.stringify({ ...eventMetadata(event), processed: profile.name }),
+    Detail: JSON.stringify({  processed: profile.name }),
   });
 };
