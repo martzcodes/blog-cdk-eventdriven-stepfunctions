@@ -1,4 +1,4 @@
-import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import { Duration, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
@@ -32,9 +32,11 @@ export class BlogCdkEventdrivenStepfunctionsStack extends Stack {
 
   addLambda({name, detailType, bucket}: { name: string, detailType: string, bucket?: Bucket}) {
     const fn = new NodejsFunction(this, `${name}Fn`, {
+      functionName: `${name}Fn`, // only adding to make the o11y more readable
       logRetention: RetentionDays.ONE_DAY,
       runtime: Runtime.NODEJS_16_X,
       entry: `${__dirname}/lambda/${name}.ts`,
+      timeout: Duration.minutes(1),
     });
     this.bus.addLambdaRule(`${name}Rule`, {
       lambda: fn,

@@ -32,6 +32,7 @@ export class EventdrivenStepfunction extends Construct {
     const multipleEvent = this.createEvent(`GetMultiple`, {
       details: {
         "execution.$": "$$.Execution.Id", // this is the arn for the state machine running
+        "stateName.$": "$$.State.Name",
       },
       resultPath: "$.names",
       detailType: DetailType.GET_MULTIPLE,
@@ -45,6 +46,7 @@ export class EventdrivenStepfunction extends Construct {
       details: {
         "name.$": "$.name",
         "execution.$": "$.execution", // this is the arn for the state machine running, provided via the map params
+        "stateName.$": "$.stateName",
       },
       detailType: DetailType.PROCESS_SINGLE,
       eventBus: props.bus.defaultBus,
@@ -55,6 +57,7 @@ export class EventdrivenStepfunction extends Construct {
       parameters: {
         "name.$": "$$.Map.Item.Value", // this is an item in the list provided via the items path
         "execution.$": "$$.Execution.Id", // this is the arn for the state machine running
+        "stateName.$": "$$.State.Name",
       },
       resultPath: JsonPath.DISCARD,
     });
@@ -65,6 +68,7 @@ export class EventdrivenStepfunction extends Construct {
       details: {
         "names.$": "$.names.value", // matches the resultPath of the getMultiple step
         "execution.$": "$$.Execution.Id", // this is the arn for the state machine running
+        "stateName.$": "$$.State.Name",
       },
       detailType: DetailType.PROCESS_ALL,
       eventBus: props.bus.defaultBus,
@@ -80,6 +84,7 @@ export class EventdrivenStepfunction extends Construct {
       .next(success);
 
     this.stateMachine = new StateMachine(this, `EventdrivenMachine`, {
+      stateMachineName: `EventDrivenMachine`, // only adding to make the o11y more readable
       definition,
     });
 

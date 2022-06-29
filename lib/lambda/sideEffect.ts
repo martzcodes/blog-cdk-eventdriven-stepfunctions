@@ -24,5 +24,5 @@ export const handler = async (
   await putEvent(ebClient, event, {
     DetailType: DetailType.SIDE_EFFECT_COMPLETE,
     Detail: JSON.stringify({  processed: profile.name }),
-  });
+  }, 20);
 };

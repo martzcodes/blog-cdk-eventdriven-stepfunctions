@@ -30,8 +30,12 @@ export const eventMetadata = (
 export const putEvent = async (
   ebClient: EventBridge,
   event: EventBridgeEvent<string, any>,
-  entry: PutEventsRequestEntry
+  entry: PutEventsRequestEntry,
+  delayRange?: number
 ) => {
+  // random sleep to make observability more interesting
+  await new Promise(r => setTimeout(r, 1000 * Math.floor(Math.random() * (delayRange || 10))));
+
   const detail = JSON.parse(entry.Detail!);
   return await ebClient
     .putEvents({
